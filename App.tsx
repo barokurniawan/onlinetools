@@ -5,93 +5,87 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DeliveryOrder from './src/module/DeliveryOrder/DeliveryOrder';
+import DeliveryOrderResult from './src/module/DeliveryOrder/DeliveryOrderResult';
 import TrackingContainer from './src/module/TrackingContainer/TrackingContainer';
+import TrackingContainerResult from './src/module/TrackingContainer/TrackingContainerResult';
 import BillOfLading from './src/module/BillOfLading/BillOfLading';
 import BillOfLadingResult from './src/module/BillOfLading/BillOfLadingResult';
-import DeliveryOrderResult from './src/module/DeliveryOrder/DeliveryOrderResult';
 
 const Tab = createMaterialTopTabNavigator();
-const DeliveryOrderNav = createStackNavigator();
-const BillOfLadingNav = createStackNavigator();
+const ApplicationStack = createStackNavigator();
 
 class App extends React.Component {
-    DeliveryOrderStackScreen() {
+    NavigationContainerStack() {
         return (
-            <DeliveryOrderNav.Navigator>
-                <DeliveryOrderNav.Screen name="DeliveryOrder" component={DeliveryOrder} options={{
-                    title: 'Delivery Order',
-                    headerStyle: {
-                        backgroundColor: '#3f51b5'
-                    },
-                    headerTintColor: '#fff',
-                    headerTitleStyle: {
-                        fontWeight: 'bold',
-                    }
+            <Tab.Navigator initialRouteName="Delivery Order" tabBarPosition="bottom" swipeEnable="true" tabBarOptions={{
+                showIcon: true,
+                showLabel: false
+            }}>
+                <Tab.Screen name="Delivery Order" component={DeliveryOrder} options={{
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="truck-delivery" color={color} size={26} />
+                    ),
                 }} />
-                <DeliveryOrderNav.Screen name="DeliveryOrderResult" component={DeliveryOrderResult} options={{
-                    title: 'Result',
-                    headerStyle: {
-                        backgroundColor: '#3f51b5'
-                    },
-                    headerTintColor: '#fff',
-                    headerTitleStyle: {
-                        fontWeight: 'bold',
-                    }
-                }} />
-            </DeliveryOrderNav.Navigator>
-        );
-    }
 
-    BillOfLadingStackScreen() {
-        return (
-            <BillOfLadingNav.Navigator headerMode="float">
-                <BillOfLadingNav.Screen name="BillOfLading" component={BillOfLading} options={{
-                    title: 'Bill of Lading',
-                    headerStyle: {
-                        backgroundColor: '#3f51b5'
-                    },
-                    headerTintColor: '#fff',
-                    headerTitleStyle: {
-                        fontWeight: 'bold',
-                    }
+                <Tab.Screen name="Bill of Lading" component={BillOfLading} options={{
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="clipboard-list" color={color} size={26} />
+                    ),
                 }} />
-                <BillOfLadingNav.Screen name="BillOfLadingResult" component={BillOfLadingResult} options={{
-                    title: 'Result',
-                    headerStyle: {
-                        backgroundColor: '#3f51b5'
-                    },
-                    headerTintColor: '#fff',
-                    headerTitleStyle: {
-                        fontWeight: 'bold',
-                    }
+
+                <Tab.Screen name="Tracking Container" component={TrackingContainer} options={{
+                    tabBarIcon: ({ color }) => (
+                        <MaterialCommunityIcons name="map-clock" color={color} size={26} />
+                    ),
                 }} />
-            </BillOfLadingNav.Navigator>
+            </Tab.Navigator>
         );
     }
 
     render() {
         return (
             <NavigationContainer>
-                <Tab.Navigator initialRouteName="Delivery Order" tabBarPosition="bottom" swipeEnable="true" tabBarOptions={{
-                    showIcon: true,
-                    showLabel: false,
+                <ApplicationStack.Navigator headerMode="float" screenOptions={{
+                    headerShown: false
                 }}>
-                    <Tab.Screen name="Delivery Order" component={this.DeliveryOrderStackScreen} options={{
-                        tabBarIcon: ({ color }) => (
-                            <MaterialCommunityIcons name="truck-delivery" color={color} size={26} />
-                        ),
+                    <ApplicationStack.Screen name="Home" component={this.NavigationContainerStack} />
+
+                    <ApplicationStack.Screen name="DeliveryOrderResult" component={DeliveryOrderResult} options={{
+                        title: 'Result',
+                        headerStyle: {
+                            backgroundColor: '#3f51b5'
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+                        headerShown: true,
                     }} />
-                    <Tab.Screen name="Bill of Lading" component={this.BillOfLadingStackScreen} options={{
-                        tabBarIcon: ({ color }) => (
-                            <MaterialCommunityIcons name="clipboard-list" color={color} size={26} />
-                        ),
+
+                    <ApplicationStack.Screen name="BillOfLadingResult" component={BillOfLadingResult} options={{
+                        title: 'Result',
+                        headerStyle: {
+                            backgroundColor: '#3f51b5'
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+                        headerShown: true,
                     }} />
-                    <Tab.Screen name="Tracking Container" component={TrackingContainer} options={{
-                        tabBarIcon: ({ color }) => (
-                            <MaterialCommunityIcons name="map-clock" color={color} size={26} />
-                        ),
+
+                    <ApplicationStack.Screen name="TrackingContainerResult" component={TrackingContainerResult} options={{
+                        title: 'Result',
+                        headerStyle: {
+                            backgroundColor: '#3f51b5'
+                        },
+                        headerTintColor: '#fff',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+                        headerShown: true,
                     }} />
-                </Tab.Navigator>
+                </ApplicationStack.Navigator>
             </NavigationContainer>
         );
     }
