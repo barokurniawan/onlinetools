@@ -22,6 +22,34 @@ const MainStyle = StyleSheet.create({
         fontSize: 11,
         marginTop: 20
     },
+
+    theme_input: {
+        width: 250,
+        marginBottom: 20,
+        borderWidth: 1,
+        height: 40,
+        textAlign: 'center',
+        borderColor: '#bdbdbd',
+        color: '#616161'
+    },
+
+    list_view: {
+        padding: 10,
+        borderBottomColor: '#d0d0d0',
+        borderBottomWidth: 1,
+        borderTopColor: '#ffffff',
+        borderTopWidth: 1,
+    },
+
+    item_label: {
+        marginBottom: 5,
+        color: '#757575'
+    },
+
+    item_description: {
+        color: '#424242'
+    },
+
 });
 
 export default MainStyle;
