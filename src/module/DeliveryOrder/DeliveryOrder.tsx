@@ -8,9 +8,7 @@ class DeliveryOrder extends React.Component {
             <View style={MainStyle.container}>
                 <TextInput
                     placeholder="Delivery Order"
-                    style={{
-                        width: 250
-                    }}
+                    style={MainStyle.theme_input}
                 />
 
                 <Button onPress={() => { this.props.navigation.navigate("DeliveryOrderResult") }} title="Cari DO" style={MainStyle.button_submit} />

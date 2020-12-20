@@ -1,44 +1,43 @@
 import React from 'react';
-import { FlatList, SafeAreaView, Text, View } from 'react-native';
-
-const DATA = [
-    {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'First Item',
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'Second Item',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'Third Item',
-    },
-];
-
-const Item = ({ title }) => (
-    <View>
-        <Text>{title}</Text>
-    </View>
-);
+import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import MainStyle from '../../style/MainStyle';
 
 class BillOfLadingResult extends React.Component {
 
-    renderItem({ item }) {
-        return (
-            <Item title={item.title} />
-        );
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            data: [],
+            isLoading: true
+        };
+    }
+
+    componentDidMount() {
+        fetch('https://reactnative.dev/movies.json')
+            .then((response) => response.json())
+            .then((json) => {
+                this.setState({ data: json.movies });
+            })
+            .catch((error) => console.error(error))
+            .finally(() => {
+                this.setState({ isLoading: false });
+            });
     }
 
     render() {
         return (
-            <SafeAreaView>
-                <FlatList
-                    data={DATA}
-                    renderItem={this.renderItem}
-                    keyExtractor={item => item.id}
-                />
-            </SafeAreaView>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+                {this.state.isLoading ? <ActivityIndicator size="large" color="#0000ff" style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} /> : (
+                    <FlatList
+                        data={this.state.data}
+                        keyExtractor={({ id }, index) => id}
+                        renderItem={({ item }) => (
+                            <Text style={MainStyle.list_view}>{item.title}, {item.releaseYear}</Text>
+                        )}
+                    />
+                )}
+            </View>
         );
     }
 }
