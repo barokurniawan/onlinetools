@@ -10,11 +10,27 @@ import TrackingContainer from './src/module/TrackingContainer/TrackingContainer'
 import TrackingContainerResult from './src/module/TrackingContainer/TrackingContainerResult';
 import BillOfLading from './src/module/BillOfLading/BillOfLading';
 import BillOfLadingResult from './src/module/BillOfLading/BillOfLadingResult';
+import SearchData from './src/context/SearchData';
 
 const Tab = createMaterialTopTabNavigator();
 const ApplicationStack = createStackNavigator();
 
 class App extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            result: ""
+        };
+    }
+
+    setResult = (mResult) => {
+        this.setState({
+            result: mResult
+        });
+    }
+
     NavigationContainerStack() {
         return (
             <Tab.Navigator initialRouteName="Delivery Order" tabBarPosition="bottom" swipeEnable="true" tabBarOptions={{
@@ -44,49 +60,54 @@ class App extends React.Component {
 
     render() {
         return (
-            <NavigationContainer>
-                <ApplicationStack.Navigator headerMode="float" screenOptions={{
-                    headerShown: false
-                }}>
-                    <ApplicationStack.Screen name="Home" component={this.NavigationContainerStack} />
+            <SearchData.Provider value={{
+                result: this.state.result,
+                setResult: this.setResult
+            }}>
+                <NavigationContainer>
+                    <ApplicationStack.Navigator headerMode="float" screenOptions={{
+                        headerShown: false
+                    }}>
+                        <ApplicationStack.Screen name="Home" component={this.NavigationContainerStack} />
 
-                    <ApplicationStack.Screen name="DeliveryOrderResult" component={DeliveryOrderResult} options={{
-                        title: 'Result',
-                        headerStyle: {
-                            backgroundColor: '#3f51b5'
-                        },
-                        headerTintColor: '#fff',
-                        headerTitleStyle: {
-                            fontWeight: 'bold',
-                        },
-                        headerShown: true,
-                    }} />
+                        <ApplicationStack.Screen name="DeliveryOrderResult" component={DeliveryOrderResult} options={{
+                            title: 'Result',
+                            headerStyle: {
+                                backgroundColor: '#3f51b5'
+                            },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                            },
+                            headerShown: true,
+                        }} />
 
-                    <ApplicationStack.Screen name="BillOfLadingResult" component={BillOfLadingResult} options={{
-                        title: 'Result',
-                        headerStyle: {
-                            backgroundColor: '#3f51b5'
-                        },
-                        headerTintColor: '#fff',
-                        headerTitleStyle: {
-                            fontWeight: 'bold',
-                        },
-                        headerShown: true,
-                    }} />
+                        <ApplicationStack.Screen name="BillOfLadingResult" component={BillOfLadingResult} options={{
+                            title: 'Result',
+                            headerStyle: {
+                                backgroundColor: '#3f51b5'
+                            },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                            },
+                            headerShown: true,
+                        }} />
 
-                    <ApplicationStack.Screen name="TrackingContainerResult" component={TrackingContainerResult} options={{
-                        title: 'Result',
-                        headerStyle: {
-                            backgroundColor: '#3f51b5'
-                        },
-                        headerTintColor: '#fff',
-                        headerTitleStyle: {
-                            fontWeight: 'bold',
-                        },
-                        headerShown: true,
-                    }} />
-                </ApplicationStack.Navigator>
-            </NavigationContainer>
+                        <ApplicationStack.Screen name="TrackingContainerResult" component={TrackingContainerResult} options={{
+                            title: 'Result',
+                            headerStyle: {
+                                backgroundColor: '#3f51b5'
+                            },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: {
+                                fontWeight: 'bold',
+                            },
+                            headerShown: true,
+                        }} />
+                    </ApplicationStack.Navigator>
+                </NavigationContainer>
+            </SearchData.Provider>
         );
     }
 }
